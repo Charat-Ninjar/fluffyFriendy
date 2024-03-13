@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    {% if items %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-right">Total:</td>
+                <td>{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <img src="https://www.adasglobal.com/img/empty-cart.png" class="img-fluid" alt="Empty Cart">
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
