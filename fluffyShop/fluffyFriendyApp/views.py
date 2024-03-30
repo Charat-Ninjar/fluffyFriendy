@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from fluffyFriendyApp.models import User, Product, Cart
+from django.shortcuts import render, redirect
+from .forms import ProductForm
+
+
 # Create your views here.
 
 def index(request):
@@ -12,18 +16,13 @@ def cart(request):
 def form(request):
     return HttpResponse("<h1> Form </h1>")
 
-def product_card(request):
-    owner_obj = Driver.objects.get(pk=pk)
 
-    car_objs = Car.objects.filter(owner_id=owner_obj.id)
-
-    context = {
-
-        "vehicles": car_objs,
-
-        "drivers": owner_obj,
-
-    }
-
-    return render(request, "car_detail.html", context)
-
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # return redirect('product_list')  # Redirect to product list page or any other page
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
