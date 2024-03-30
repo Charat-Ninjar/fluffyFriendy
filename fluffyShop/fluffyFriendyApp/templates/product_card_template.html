@@ -2,7 +2,7 @@
     {% for card in card_collection %}
     <div class="col-md-4 mb-4">
         <div class="card">
-            <img src="{{ card.image_url }}" class="card-img-top img-fluid" alt="{{ card.image_alt }}"
+            <img src="{{ card.image }}" class="card-img-top img-fluid" alt="{{ card.image_alt }}"
                 style="height: 200px;">
             <div class="card-body">
                 <form method="post" action="/buyItem">
