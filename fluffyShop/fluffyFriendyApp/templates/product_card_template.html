@@ -5,21 +5,20 @@
     <div class="col-md-4 mb-4">
         <div class="card">
             <div>
-                <div class="text-end position-absolute top-0 end-0">
+                <div class="position-absolute top-0 end-0">
                     <a href="{% url 'remove_product' card.product_id %}">
                         <button type="button" class="btn btn-outline-danger me-2" aria-label="Remove product">
                             <i class="bi bi-trash"></i>
                         </button>
                     </a>
                     <a href="{% url 'edit_product' card.product_id %}">
-                        <button type="button" class="btn btn-outline-primary edit-btn" aria-label="Edit product">
+                        <button type="button" class="btn btn-outline-primary " aria-label="Edit product">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </a>
                 </div>
             </div>
-            <img src="{{ card.image }}" class="card-img-top img-fluid" alt="{{ card.image_alt }}"
-                style="height: 200px;">
+            <img src="{{ card.image }}" class="card-img-top img-fluid" alt="{{ card.name }}" style="height: 200px;">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
@@ -27,16 +26,15 @@
                         <p class="card-text">{{ card.description }}</p>
                     </div>
                 </div>
-                <form method="post" action="/buyItem">
-                    {% csrf_token %}
-                    <input type="hidden" name="name" value="{{ card.name }}">
-                    <input type="hidden" name="price" value="{{ card.price }}">
-                    <input type="hidden" name="product_id" value="{{ card.id }}">
-                    <div class="d-flex justify-content-between align-items-center text-center">
-                        <button type="submit" class="btn btn-primary">BUY</button>
-                        <div class="mt-2">{{ card.price }} $</div>
-                    </div>
+                
+                <div class="d-flex justify-content-between align-items-center text-center">
+                    <a href="{% url 'add_to_cart' card.product_id %}" class="btn btn-primary"><button type="submit"
+                        class="btn btn-primary">BUY</button></a>
+                    <div class="mt-2">{{ card.price }} $</div>
+                </div>
                 </form>
+
+
             </div>
         </div>
     </div>

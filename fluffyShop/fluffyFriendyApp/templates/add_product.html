@@ -1,9 +1,15 @@
 {% extends 'layout.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/form_styles.css' %}">
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Product</button>
-</form>
+<div class="form_add mt-5">
+    <form method="post" enctype="multipart/form-data" class="form_add">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Product</button>
+    </form>
+</div>
+
 {% endblock %}
