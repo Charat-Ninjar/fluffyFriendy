@@ -11,7 +11,6 @@
         </thead>
         <tbody>
             {% for product, products in product_summary.items %}
-                {% cycle 'odd-row' 'even-row' as row_class %}
                 <tr class="{{ row_class }}">
                     <td>{{ product }}</td> 
                     <td>{{ products.price }}</td> 

@@ -1,6 +1,6 @@
 from django import template
 from django.template.loader import render_to_string
-from fluffyFriendyApp.models import Product, User, Cart
+from fluffyFriendyApp.models import Product, User, Cart, CartProduct
 from collections import defaultdict
 
 register = template.Library()
@@ -18,24 +18,27 @@ def view_cart_custom(context):
     mock_user_id = 2
     try:
         user = User.objects.get(pk=mock_user_id)
-        print("user : ", user)
+        print("user:", user)
         cart = Cart.objects.filter(user=user, checkout_status=False).first()
-        cart_items = cart.products.all() if cart else []
+        cart_products = CartProduct.objects.filter(cart=cart) if cart else []
 
         product_summary = {}
-        for product in cart_items:
+        for cart_product in cart_products:
+            product = cart_product.product
             if product.name in product_summary:
-                product_summary[product.name]['quantity'] += 1
+                product_summary[product.name]['quantity'] += cart_product.quantity
             else:
                 product_summary[product.name] = {
                     'price': product.price,
-                    'quantity': 1
+                    'quantity': cart_product.quantity
                 }
-        
+
+
+        print("Cart Items:", product_summary)
+
         for product_name, data in product_summary.items():
             data['total_price'] = data['price'] * data['quantity']
 
-        print("Cart Items:", product_summary)
         return render_to_string("cart.html", {"product_summary": product_summary})
     except User.DoesNotExist:
         print("User with ID 1 does not exist.")
