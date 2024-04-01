@@ -13,7 +13,7 @@ def index(request):
     return render(request, "index.html")
 
 def cart(request):
-    return render(request, "cart.html")
+    return render(request, "cart_index.html")
 
 def form(request):
     return HttpResponse("<h1> Form </h1>")
@@ -87,8 +87,10 @@ def view_cart(request):
 
     cart = Cart.objects.filter(user=user, checkout_status=False).first() 
     if cart:
-        cart_items = cart.products.all()  
+        cart_items = "test"
     else:
-        cart_items = [] 
+        cart_items = ["test"] 
 
+
+    cart_items = "test..."
     return render(request, "cart.html", {"items": cart_items})

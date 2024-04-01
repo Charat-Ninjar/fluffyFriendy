@@ -1,5 +1,3 @@
-{% load static %}
-
 <div class="row mt-5">
     {% for card in card_collection %}
     <div class="col-md-4 mb-4">
@@ -28,7 +26,7 @@
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center text-center">
-                    <a href="{% url 'add_to_cart' card.product_id %}" class="btn btn-primary"><button type="submit"
+                    <a href="{% url 'add_to_cart' card.product_id %}" class="btn "><button type="submit"
                         class="btn btn-primary">BUY</button></a>
                     <div class="mt-2">{{ card.price }} $</div>
                 </div>
