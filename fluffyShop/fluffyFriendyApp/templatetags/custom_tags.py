@@ -23,6 +23,8 @@ def view_cart_custom(context):
         cart_products = CartProduct.objects.filter(cart=cart) if cart else []
 
         product_summary = {}
+        subtotal = 0
+
         for cart_product in cart_products:
             product = cart_product.product
             if product.name in product_summary:
@@ -30,16 +32,17 @@ def view_cart_custom(context):
             else:
                 product_summary[product.name] = {
                     'price': product.price,
-                    'quantity': cart_product.quantity
+                    'quantity': cart_product.quantity,
+                    'image' : product.image
                 }
+            product_summary[product.name]['total_price'] = product_summary[product.name]['price'] * product_summary[product.name]['quantity']
+            subtotal += product_summary[product.name]['total_price']
 
+        total_price = subtotal
 
         print("Cart Items:", product_summary)
 
-        for product_name, data in product_summary.items():
-            data['total_price'] = data['price'] * data['quantity']
-
-        return render_to_string("cart.html", {"product_summary": product_summary})
+        return render_to_string("cart.html", {"product_summary": product_summary, "subtotal": subtotal, "total_price": total_price})
     except User.DoesNotExist:
         print("User with ID 1 does not exist.")
         return ''

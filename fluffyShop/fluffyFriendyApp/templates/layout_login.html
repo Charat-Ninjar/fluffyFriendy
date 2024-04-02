@@ -28,28 +28,28 @@
         <div class="container-fluid justify-content-between">
             <div class="d-flex align-items-center">
                 <div>
-                    <a class="navbar-brand ms-4 fs-3 fw-semibold" href="/">
+                    <a class="navbar-brand ms-4 fs-3 fw-semibold" href="">
                         <span class="text-with-strokes">Fluffy Friendy</span>
                     </a>
-                </div>                              
+                </div>
                 <div>
                     <img src="{% static 'logo.jpg' %}" alt="" style="height: 40px; width: 45px"></img>
                 </div>
-                
+
             </div>
 
-            <div class="me-5">
+            <!-- <div class="me-5" disabled>
                 <form class="d-flex" method="get" action="{% url 'search_product' %}">
                     <input class="form-control me-3" style="width: 280px;" type="search" placeholder="Search" aria-label="Search"
                         name="query">
                     <button class="btn btn-outline-success me-5" type="submit">Search</button>
                 </form>
-            </div>
-            <div class="me-4 ms-5">
+            </div> -->
+            <!-- <div class="me-4 ms-5">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <!-- <a class="nav-link active" aria-current="" href="/add">add products</a> -->
+                            <a class="nav-link active" aria-current="" href="/add">add products</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav  mb-2 mb-lg-0 justify-content-end ">
@@ -76,7 +76,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/createmember">createmember</a>
+                                    <a class="dropdown-item" href="/register_form">createmember</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="/login">Log out</a>
@@ -84,6 +84,18 @@
                             </ul>
                     </ul>
 
+                </div>
+            </div> -->
+            <div class="me-3 d-flex">
+                <div class="fs-5  text-with-hover me-3 ">
+                    <a class="nav-link active" href="/register_form">
+                        Sign up
+                    </a>
+                </div>
+                <div class="fs-5  text-with-hover">
+                    <a class="nav-link active" href="/login">
+                        login
+                    </a>
                 </div>
             </div>
 

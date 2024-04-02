@@ -1,8 +1,9 @@
 <div class="container mt-3">
     <h1>Shopping Cart</h1>
-    <table class="table">
+    <table class="table text-center">
         <thead>
             <tr>
+                <th></th>
                 <th>Item</th>
                 <th>Price</th>
                 <th>Quantity</th>
@@ -11,13 +12,40 @@
         </thead>
         <tbody>
             {% for product, products in product_summary.items %}
-                <tr class="{{ row_class }}">
-                    <td>{{ product }}</td> 
-                    <td>{{ products.price }}</td> 
-                    <td>{{ products.quantity }}</td>      
-                    <td>{{ products.total_price }}</td>        
-                </tr>
+            <tr class="{{ row_class }}">
+                <td><img src="{{ products.image }}"  alt="{{ product.image }}" width="50" height="40"></td>
+                <td>{{ product }}</td>
+                <td>{{ products.price }}</td>
+                <td>{{ products.quantity }}</td>
+                <td>{{ products.total_price }}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex-row ">
+        <div class="d-flex justify-content-between text-center">
+            <div>
+                Subtotal
+            </div>
+            <div>
+                {{ subtotal }}
+            </div>
+        </div>
+        <div class="d-flex justify-content-between border-bottom border-dark-subtle mb-2">
+            <div>
+                Shipping
+            </div>
+            <div>
+                Free
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+            <div>
+                TOTAL
+            </div>
+            <div>
+                {{ total_price }}
+            </div>
+        </div>
+    </div>
 </div>

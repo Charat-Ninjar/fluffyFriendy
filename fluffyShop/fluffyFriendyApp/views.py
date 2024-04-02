@@ -9,6 +9,7 @@ import logging
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductForm
 from .models import User, Product, Cart, CartProduct
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -19,6 +20,22 @@ def cart(request):
 
 def form(request):
     return HttpResponse("<h1> Form </h1>")
+
+def login(request):
+    return render(request, "login.html")
+
+def register(request):
+    return render(request, "register_form.html")
+
+def add_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = User.objects.create_user(username=username,password=password)
+    user.save()
+    print("test user", user)
+    return render(request,"login.html")
+
 
 def remove_product_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)

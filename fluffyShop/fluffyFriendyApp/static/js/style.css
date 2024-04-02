@@ -2,7 +2,7 @@ html {
     color: #FFF0F1;
 }
 
-.test{
+.test {
     background-color: #FFF0F1;
 }
 
@@ -10,7 +10,9 @@ html {
     background-color: #f1f1f1;
     padding: 20px;
 }
-input[type="text"], textarea {
+
+input[type="text"],
+textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -20,6 +22,7 @@ input[type="text"], textarea {
     margin-bottom: 16px;
     resize: vertical;
 }
+
 button[type="submit"] {
     background-color: #4CAF50;
     color: white;
@@ -31,7 +34,8 @@ button[type="submit"] {
 
 textarea#id_description {
 
-    height: 100px; /* Adjust the height as needed */
+    height: 100px;
+    /* Adjust the height as needed */
 }
 
 .even-row {
@@ -42,14 +46,130 @@ textarea#id_description {
     background-color: #e90d0d;
 }
 
-.test-table{
+.test-table {
     background-color: #4CAF50;
 }
 
 th {
-    background-color: #333; /* Background color */
-    color: #fff; /* Text color */
-    padding: 10px; /* Padding around content */
-    text-align: left; /* Text alignment */
-    border-bottom: 2px solid #ddd; /* Bottom border */
+    background-color: #333;
+    /* Background color */
+    color: #fff;
+    /* Text color */
+    padding: 10px;
+    /* Padding around content */
+    text-align: left;
+    /* Text alignment */
+    border-bottom: 2px solid #ddd;
+    /* Bottom border */
+}
+
+nav {
+    box-shadow: 1px 3px 8px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 1px 3px 8px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 3px 8px 0px rgba(0, 0, 0, 0.75);
+}
+
+/* Define the text glow effect */
+.nav-item:hover {
+    text-shadow: 0 0 3px rgba(255,255,255,0.5); /* Increased blur radius and opacity */
+}
+
+.text-with-strokes {
+    color: black; /* Set text color to black */
+    text-shadow:
+        -1px -1px 0 white,  
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white, /* Create first layer of white stroke */
+        -2px -2px 0 pink,  
+        2px -2px 0 pink,
+        -2px 2px 0 pink,
+        2px 2px 0 pink; /* Create second layer of pink stroke */
+    transition: text-shadow 0.3s; /* Add transition effect */
+}
+
+.text-with-strokes:hover {
+    text-shadow:
+        -1px -1px 0 pink,  
+        1px -1px 0 pink,
+        -1px 1px 0 pink,
+        1px 1px 0 pink, /* Change first layer to pink on hover */
+        -2px -2px 0 white,  
+        2px -2px 0 white,
+        -2px 2px 0 white,
+        2px 2px 0 white; /* Change second layer to white on hover */
+}
+
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Login form styling */
+.login-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    margin: 50px auto; /* Center the login form */
+}
+
+.login-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.input-group input {
+    width: calc(100% - 12px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+table {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.text-with-hover:hover {
+    text-shadow:
+        -1px -1px 0 white,  
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white, /* Create first layer of white stroke */
+        -2px -2px 0 pink,  
+        2px -2px 0 pink,
+        -2px 2px 0 pink,
+        2px 2px 0 pink; /* Create second layer of pink stroke */
+    transition: text-shadow 0.3s; 
 }
