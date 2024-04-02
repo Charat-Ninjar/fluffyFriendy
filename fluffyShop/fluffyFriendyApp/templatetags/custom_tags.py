@@ -1,7 +1,8 @@
 from django import template
 from django.template.loader import render_to_string
-from fluffyFriendyApp.models import Product, User, Cart, CartProduct
+from fluffyFriendyApp.models import Product, Cart, CartProduct
 from collections import defaultdict
+from django.contrib.auth.models import User
 
 register = template.Library()
 
@@ -12,13 +13,16 @@ def productCard(context):
     products = Product.objects.all()
     return render_to_string('product_card_template.html', {'card_collection': products})
 
-@register.simple_tag(takes_context=True)
-def view_cart_custom(context):
+@register.simple_tag
+def view_cart_custom(request):
     print("View Cart Custom tag called.")
-    mock_user_id = 2
+    testUser = request.user
+
+    # username = 'ninjar007'
     try:
-        user = User.objects.get(pk=mock_user_id)
+        user = User.objects.get(username=testUser)
         print("user:", user)
+
         cart = Cart.objects.filter(user=user, checkout_status=False).first()
         cart_products = CartProduct.objects.filter(cart=cart) if cart else []
 
@@ -33,7 +37,8 @@ def view_cart_custom(context):
                 product_summary[product.name] = {
                     'price': product.price,
                     'quantity': cart_product.quantity,
-                    'image' : product.image
+                    'image' : product.image,
+                    'id' : product.product_id
                 }
             product_summary[product.name]['total_price'] = product_summary[product.name]['price'] * product_summary[product.name]['quantity']
             subtotal += product_summary[product.name]['total_price']
@@ -44,5 +49,5 @@ def view_cart_custom(context):
 
         return render_to_string("cart.html", {"product_summary": product_summary, "subtotal": subtotal, "total_price": total_price})
     except User.DoesNotExist:
-        print("User with ID 1 does not exist.")
+        print("User with username {} does not exist.")
         return ''

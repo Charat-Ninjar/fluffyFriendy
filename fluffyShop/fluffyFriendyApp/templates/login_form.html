@@ -2,8 +2,16 @@
 
 {% block content %}
 <div class="login-container ">
-    <h2>Sign up</h2>
-    <form action="{% url 'register' %}" method="post">
+    <h2>Login</h2>
+
+    {% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {% for message in messages %}
+        <b>{{message}}</b>
+        {% endfor %}
+    </div>
+    {%endif%}
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="input-group">
             <label for="username">Username:</label>
@@ -13,11 +21,9 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <div class="input-group">
-            <label for="password">Confirm Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">register</button>
+        <a href="/">
+            <button type="submit">Login</button>
+        </a>
     </form>
 </div>
 

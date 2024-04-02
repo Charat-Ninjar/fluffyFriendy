@@ -1,15 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-from fluffyFriendyApp.models import User, Product, Cart
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404, redirect
-from .forms import ProductForm
-import logging
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
+from fluffyFriendyApp.models import Product, Cart
 from .forms import ProductForm
-from .models import User, Product, Cart, CartProduct
-from django.contrib.auth.models import User
+from .models import Product, Cart, CartProduct
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -21,21 +17,67 @@ def cart(request):
 def form(request):
     return HttpResponse("<h1> Form </h1>")
 
-def login(request):
-    return render(request, "login.html")
+def login_form(request):
+    return render(request, "login_form.html")
 
-def register(request):
-    return render(request, "register_form.html")
+def signup_form(request):
+    return render(request, "signup_form.html")
 
-def add_user(request):
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    user = request.user 
+    cart, created = Cart.objects.get_or_create(user=user)
+    CartProduct.objects.create(cart=cart, product=product)
+    return redirect('/')
+
+@login_required
+def view_cart(request):
+    user = request.user
+    cart = Cart.objects.filter(user=user, checkout_status=False).first()
+    print("test view_cart")
+    if cart:
+        cart_products = CartProduct.objects.filter(cart=cart)
+        product_summary = {}
+        subtotal = 0
+        for cart_product in cart_products:
+            product = cart_product.product
+            if product.name in product_summary:
+                product_summary[product.name]['quantity'] += cart_product.quantity
+            else:
+                product_summary[product.name] = {
+                    'price': product.price,
+                    'quantity': cart_product.quantity,
+                    'image': product.image
+                }
+            product_summary[product.name]['total_price'] = product_summary[product.name]['price'] * product_summary[product.name]['quantity']
+            subtotal += product_summary[product.name]['total_price']
+        total_price = subtotal
+        return render(request, "cart.html", {"product_summary": product_summary, "subtotal": subtotal, "total_price": total_price})
+    else:
+        return render(request, "cart_index.html")
+
+
+def signup(request):
     username = request.POST['username']
     password = request.POST['password']
 
     user = User.objects.create_user(username=username,password=password)
     user.save()
     print("test user", user)
-    return render(request,"login.html")
+    return render(request,"login_form.html")
 
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = auth.authenticate(username=username, password=password)
+    if user is not None :
+        auth.login(request, user)
+        return redirect('/')
+    else :
+        messages.info(request,"user or password invalid")
+        return redirect('/login_form')
 
 def remove_product_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
@@ -81,18 +123,23 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
 
-def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    try:
-        user = User.objects.get(name='mock_user')
-    except User.DoesNotExist:
-        user = User.objects.create(name='mock_user')
-    cart, created = Cart.objects.get_or_create(user=user)
-    CartProduct.objects.create(cart=cart, product=product)
-    return redirect('/')
 
-def view_cart(request):
-    user = User.objects.get(name='mock_user') 
-    cart = Cart.objects.filter(user=user, checkout_status=False).first() 
-    cart_items = CartProduct.objects.filter(cart=cart)
-    return render(request, "cart.html", {"items": cart_items})
+def remove_item(request, product_id):
+    try:
+        CartProduct.objects.filter(cart=request.user.cart, product_id=product_id).delete()
+        return redirect('/cart_index')
+    except Exception as e:
+        # Log the error or return an error response
+        print("Error removing item:", e)
+        return HttpResponseServerError("Error removing item")
+
+def increase_item(request, product_id):
+    try:
+        product = get_object_or_404(CartProduct, pk=product_id)
+        product.quantity += 1
+        product.save()
+        return redirect('/cart_index')
+    except Exception as e:
+        # Log the error or return an error response
+        print("Error increasing item quantity:", e)
+        return HttpResponseServerError("Error increasing item quantity")

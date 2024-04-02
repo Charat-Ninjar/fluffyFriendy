@@ -1,10 +1,10 @@
 {% extends 'layout_login.html' %}
-{% load custom_tags %}
 
 {% block content %}
 <div class="login-container ">
-    <h2>Login</h2>
-    <form action="#" method="post">
+    <h2>Sign up</h2>
+    <form action="{% url 'signup' %}" method="post">
+        {% csrf_token %}
         <div class="input-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -13,9 +13,11 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <a href="/">
-            <button type="submit">Login</button>
-        </a>
+        <div class="input-group">
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">register</button>
     </form>
 </div>
 
